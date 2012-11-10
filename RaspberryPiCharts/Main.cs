@@ -23,6 +23,7 @@ namespace RaspberryPiCharts
 
         public string Endpoint = "";
         public string EndpointFileName = "endpoint.config";
+        public System.Windows.Forms.DataVisualization.Charting.ChartColorPalette OldPalette; 
 
         public Main()
         {
@@ -37,7 +38,7 @@ namespace RaspberryPiCharts
             }
         }
 
-        public void SetEndpointDialog ()
+        public void SetEndpointDialog()
         {
             Endpoint = Interaction.InputBox("Set endpoint", "Set endpoint", "");
             File.WriteAllText(EndpointFileName, Endpoint);
@@ -51,11 +52,11 @@ namespace RaspberryPiCharts
                 Http.DownloadStringAsync(new Uri(Endpoint));
                 Http.DownloadStringCompleted += new DownloadStringCompletedEventHandler(ResponseListener);
             }
-            
+
         }
 
 
-        public void ResponseListener (Object sender, DownloadStringCompletedEventArgs e)
+        public void ResponseListener(Object sender, DownloadStringCompletedEventArgs e)
         {
             var webException = e.Error as WebException;
             if (webException != null && webException.Status == WebExceptionStatus.NameResolutionFailure)
@@ -64,7 +65,7 @@ namespace RaspberryPiCharts
             {
                 string Response = (string)e.Result;
                 ResaponseObject Object = JsonConvert.DeserializeObject<ResaponseObject>(Response);
-                
+
                 CpuChart.ChartAreas[0].AxisY.Minimum = 0;
                 CpuChart.ChartAreas[0].AxisY.Maximum = 100;
                 CpuChart.Series[0].Points.AddY(Object.cpu);
@@ -81,6 +82,29 @@ namespace RaspberryPiCharts
         private void setEndpointToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetEndpointDialog();
+        }
+
+        private void ResetMenuItem_Click(object sender, EventArgs e)
+        {
+            CpuChart.Series[0].Points.Clear();
+            TemperatureChart.Series[0].Points.Clear();
+        }
+
+        private void FancifyMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CpuChart.Series[0].Palette != System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel)
+            {
+                OldPalette = CpuChart.Series[0].Palette;
+                CpuChart.Series[0].Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+                TemperatureChart.Series[0].Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+                FancifyMenuItem.Text = "Borify!";
+            }
+            else
+            {
+                CpuChart.Series[0].Palette = OldPalette;
+                TemperatureChart.Series[0].Palette = OldPalette;
+                FancifyMenuItem.Text = "Fancify!";
+            }
         }
     }
 }

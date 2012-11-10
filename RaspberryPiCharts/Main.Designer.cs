@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.CpuChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
@@ -41,6 +41,8 @@
             this.CpuLabel = new System.Windows.Forms.Label();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.SetEndpointMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ResetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FancifyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.CpuChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TemperatureChart)).BeginInit();
             this.MainMenu.SuspendLayout();
@@ -48,21 +50,21 @@
             // 
             // CpuChart
             // 
-            chartArea3.AxisX.LabelStyle.Enabled = false;
-            chartArea3.AxisX.MajorGrid.Enabled = false;
-            chartArea3.AxisX.MajorTickMark.Enabled = false;
-            chartArea3.AxisY.Interval = 10D;
-            chartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea3.Name = "ChartArea1";
-            this.CpuChart.ChartAreas.Add(chartArea3);
+            chartArea1.AxisX.LabelStyle.Enabled = false;
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.AxisX.MajorTickMark.Enabled = false;
+            chartArea1.AxisY.Interval = 10D;
+            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.Name = "ChartArea1";
+            this.CpuChart.ChartAreas.Add(chartArea1);
             this.CpuChart.Location = new System.Drawing.Point(-33, 3);
             this.CpuChart.Name = "CpuChart";
-            series3.BorderWidth = 2;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series3.Color = System.Drawing.Color.RoyalBlue;
-            series3.Name = "Cpu Usage";
-            this.CpuChart.Series.Add(series3);
+            series1.BorderWidth = 2;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Color = System.Drawing.Color.RoyalBlue;
+            series1.Name = "Cpu Usage";
+            this.CpuChart.Series.Add(series1);
             this.CpuChart.Size = new System.Drawing.Size(665, 256);
             this.CpuChart.TabIndex = 0;
             this.CpuChart.Text = "CpuChart";
@@ -75,24 +77,24 @@
             // 
             // TemperatureChart
             // 
-            chartArea4.AxisX.LabelStyle.Enabled = false;
-            chartArea4.AxisX.MajorGrid.Enabled = false;
-            chartArea4.AxisX.MajorTickMark.Enabled = false;
-            chartArea4.AxisX.MaximumAutoSize = 80F;
-            chartArea4.AxisX2.LineColor = System.Drawing.Color.White;
-            chartArea4.AxisX2.LineWidth = 0;
-            chartArea4.AxisY.Interval = 10D;
-            chartArea4.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea4.Name = "ChartArea1";
-            this.TemperatureChart.ChartAreas.Add(chartArea4);
+            chartArea2.AxisX.LabelStyle.Enabled = false;
+            chartArea2.AxisX.MajorGrid.Enabled = false;
+            chartArea2.AxisX.MajorTickMark.Enabled = false;
+            chartArea2.AxisX.MaximumAutoSize = 80F;
+            chartArea2.AxisX2.LineColor = System.Drawing.Color.White;
+            chartArea2.AxisX2.LineWidth = 0;
+            chartArea2.AxisY.Interval = 10D;
+            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea2.Name = "ChartArea1";
+            this.TemperatureChart.ChartAreas.Add(chartArea2);
             this.TemperatureChart.Location = new System.Drawing.Point(-33, 252);
             this.TemperatureChart.Name = "TemperatureChart";
-            series4.BorderWidth = 2;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series4.Color = System.Drawing.Color.RoyalBlue;
-            series4.Name = "Temperature";
-            this.TemperatureChart.Series.Add(series4);
+            series2.BorderWidth = 2;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Color = System.Drawing.Color.RoyalBlue;
+            series2.Name = "Temperature";
+            this.TemperatureChart.Series.Add(series2);
             this.TemperatureChart.Size = new System.Drawing.Size(665, 256);
             this.TemperatureChart.TabIndex = 1;
             this.TemperatureChart.Text = "chart1";
@@ -121,7 +123,9 @@
             // 
             this.MainMenu.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SetEndpointMenuItem});
+            this.SetEndpointMenuItem,
+            this.ResetMenuItem,
+            this.FancifyMenuItem});
             this.MainMenu.Location = new System.Drawing.Point(0, 502);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Size = new System.Drawing.Size(617, 24);
@@ -134,6 +138,20 @@
             this.SetEndpointMenuItem.Size = new System.Drawing.Size(86, 20);
             this.SetEndpointMenuItem.Text = "Set endpoint";
             this.SetEndpointMenuItem.Click += new System.EventHandler(this.setEndpointToolStripMenuItem_Click);
+            // 
+            // ResetMenuItem
+            // 
+            this.ResetMenuItem.Name = "ResetMenuItem";
+            this.ResetMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.ResetMenuItem.Text = "Reset";
+            this.ResetMenuItem.Click += new System.EventHandler(this.ResetMenuItem_Click);
+            // 
+            // FancifyMenuItem
+            // 
+            this.FancifyMenuItem.Name = "FancifyMenuItem";
+            this.FancifyMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.FancifyMenuItem.Text = "Fancify!";
+            this.FancifyMenuItem.Click += new System.EventHandler(this.FancifyMenuItem_Click);
             // 
             // Main
             // 
@@ -169,6 +187,8 @@
         private System.Windows.Forms.Label CpuLabel;
         private System.Windows.Forms.MenuStrip MainMenu;
         private System.Windows.Forms.ToolStripMenuItem SetEndpointMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ResetMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem FancifyMenuItem;
     }
 }
 

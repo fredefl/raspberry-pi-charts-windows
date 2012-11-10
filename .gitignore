@@ -2,3 +2,4 @@
 RaspberryPiCharts/bin/Debug
 RaspberryPiCharts/obj
 /RaspberryPiCharts/RaspberryPiCharts.csproj.user
+/RaspberryPiCharts/bin/Release/endpoint.config

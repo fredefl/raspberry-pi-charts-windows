@@ -33,6 +33,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.CpuChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
             this.TemperatureChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -145,7 +146,8 @@
             this.Controls.Add(this.TemperatureLabel);
             this.Controls.Add(this.TemperatureChart);
             this.Controls.Add(this.CpuChart);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MainMenu;
             this.Name = "Main";
             this.Text = "Raspberry Pi Charts";

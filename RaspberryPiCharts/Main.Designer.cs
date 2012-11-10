@@ -50,11 +50,13 @@
             // 
             // CpuChart
             // 
+            chartArea1.AxisX.IsMarginVisible = false;
             chartArea1.AxisX.LabelStyle.Enabled = false;
             chartArea1.AxisX.MajorGrid.Enabled = false;
             chartArea1.AxisX.MajorTickMark.Enabled = false;
             chartArea1.AxisY.Interval = 10D;
             chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.CursorY.AxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
             chartArea1.Name = "ChartArea1";
             this.CpuChart.ChartAreas.Add(chartArea1);
             this.CpuChart.Location = new System.Drawing.Point(-33, 3);
@@ -64,6 +66,7 @@
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series1.Color = System.Drawing.Color.RoyalBlue;
             series1.Name = "Cpu Usage";
+            series1.YValuesPerPoint = 2;
             this.CpuChart.Series.Add(series1);
             this.CpuChart.Size = new System.Drawing.Size(665, 256);
             this.CpuChart.TabIndex = 0;
@@ -77,10 +80,10 @@
             // 
             // TemperatureChart
             // 
+            chartArea2.AxisX.IsMarginVisible = false;
             chartArea2.AxisX.LabelStyle.Enabled = false;
             chartArea2.AxisX.MajorGrid.Enabled = false;
             chartArea2.AxisX.MajorTickMark.Enabled = false;
-            chartArea2.AxisX.MaximumAutoSize = 80F;
             chartArea2.AxisX2.LineColor = System.Drawing.Color.White;
             chartArea2.AxisX2.LineWidth = 0;
             chartArea2.AxisY.Interval = 10D;

@@ -22,8 +22,11 @@ namespace RaspberryPiCharts
         }
 
         public string Endpoint = "";
-        public string EndpointFileName = "endpoint.config";
-        public System.Windows.Forms.DataVisualization.Charting.ChartColorPalette OldPalette; 
+        public const string EndpointFileName = "endpoint.config";
+        public System.Windows.Forms.DataVisualization.Charting.ChartColorPalette OldPalette;
+        public const int XSize = 30;
+        public int IncrementalX = XSize;
+        
 
         public Main()
         {
@@ -36,6 +39,15 @@ namespace RaspberryPiCharts
             {
                 SetEndpointDialog();
             }
+            CpuChart.ChartAreas[0].AxisY.Minimum = 0;
+            CpuChart.ChartAreas[0].AxisY.Maximum = 100;
+            CpuChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+            CpuChart.ChartAreas[0].AxisX.ScaleView.Size = XSize;
+
+            TemperatureChart.ChartAreas[0].AxisY.Minimum = 0;
+            TemperatureChart.ChartAreas[0].AxisY.Maximum = 100;
+            TemperatureChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+            TemperatureChart.ChartAreas[0].AxisX.ScaleView.Size = XSize;
         }
 
         public void SetEndpointDialog()
@@ -64,7 +76,6 @@ namespace RaspberryPiCharts
 
         }
 
-
         public void ResponseListener(Object sender, DownloadStringCompletedEventArgs e)
         {
             var webException = e.Error as WebException;
@@ -74,13 +85,17 @@ namespace RaspberryPiCharts
             {
                 string Response = (string)e.Result;
                 ResaponseObject Object = JsonConvert.DeserializeObject<ResaponseObject>(Response);
+                
+                CpuChart.Series[0].Points.AddXY(IncrementalX, Math.Min(Object.cpu, (float) 100));
+                TemperatureChart.Series[0].Points.AddXY(IncrementalX, Object.temp);
+                IncrementalX++;
 
-                CpuChart.ChartAreas[0].AxisY.Minimum = 0;
-                CpuChart.ChartAreas[0].AxisY.Maximum = 100;
-                CpuChart.Series[0].Points.AddY(Object.cpu);
-                TemperatureChart.ChartAreas[0].AxisY.Minimum = 0;
-                TemperatureChart.ChartAreas[0].AxisY.Maximum = 100;
-                TemperatureChart.Series[0].Points.AddY(Object.temp);
+                if (CpuChart.ChartAreas[0].AxisX.Maximum > CpuChart.ChartAreas[0].AxisX.ScaleView.Size)
+                    CpuChart.ChartAreas[0].AxisX.ScaleView.Scroll(CpuChart.ChartAreas[0].AxisX.Maximum);
+
+                if (TemperatureChart.ChartAreas[0].AxisX.Maximum > TemperatureChart.ChartAreas[0].AxisX.ScaleView.Size)
+                    TemperatureChart.ChartAreas[0].AxisX.ScaleView.Scroll(TemperatureChart.ChartAreas[0].AxisX.Maximum);
+
             }
             catch (Exception)
             {
@@ -97,6 +112,7 @@ namespace RaspberryPiCharts
         {
             CpuChart.Series[0].Points.Clear();
             TemperatureChart.Series[0].Points.Clear();
+            CpuChart.ChartAreas[0].AxisX.Minimum = 0;
         }
 
         private void FancifyMenuItem_Click(object sender, EventArgs e)

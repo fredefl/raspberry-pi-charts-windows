@@ -40,7 +40,9 @@ namespace RaspberryPiCharts
 
         public void SetEndpointDialog()
         {
-            Endpoint = Interaction.InputBox("Set endpoint", "Set endpoint", "");
+            string OldEndpoint = Endpoint;
+            Endpoint = "";
+            Endpoint = Interaction.InputBox("Set endpoint", "Set endpoint", OldEndpoint);
             File.WriteAllText(EndpointFileName, Endpoint);
         }
 
@@ -48,9 +50,16 @@ namespace RaspberryPiCharts
         {
             if (Endpoint != "")
             {
-                WebClient Http = new WebClient();
-                Http.DownloadStringAsync(new Uri(Endpoint));
-                Http.DownloadStringCompleted += new DownloadStringCompletedEventHandler(ResponseListener);
+                try
+                {
+                    WebClient Http = new WebClient();
+                    Http.DownloadStringAsync(new Uri(Endpoint));
+                    Http.DownloadStringCompleted += new DownloadStringCompletedEventHandler(ResponseListener);
+                }
+                catch (Exception ex)
+                {
+                    SetEndpointDialog();
+                }
             }
 
         }

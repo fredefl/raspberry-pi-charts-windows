@@ -50,12 +50,19 @@ namespace RaspberryPiCharts
             TemperatureChart.ChartAreas[0].AxisX.ScaleView.Size = XSize;
         }
 
-        public void SetEndpointDialog()
+        public void SetEndpointDialog(bool Reset = false)
         {
             string OldEndpoint = Endpoint;
-            Endpoint = "";
-            Endpoint = Interaction.InputBox("Set endpoint", "Set endpoint", OldEndpoint);
-            File.WriteAllText(EndpointFileName, Endpoint);
+            if (Reset) 
+            {
+                Endpoint = "";
+            }
+            string NewEndpoint = Interaction.InputBox("Set endpoint", "Set endpoint", OldEndpoint);
+            Console.WriteLine("H:" + NewEndpoint + ":H");
+            if (NewEndpoint != "" && NewEndpoint != null) {
+                Endpoint = NewEndpoint;
+                File.WriteAllText(EndpointFileName, Endpoint);
+            }
         }
 
         private void MainTimer_Tick(object sender, EventArgs e)
@@ -70,7 +77,7 @@ namespace RaspberryPiCharts
                 }
                 catch (Exception ex)
                 {
-                    SetEndpointDialog();
+                    //SetEndpointDialog(true);
                 }
             }
 
@@ -105,7 +112,7 @@ namespace RaspberryPiCharts
 
         private void setEndpointToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetEndpointDialog();
+            //SetEndpointDialog();
         }
 
         private void ResetMenuItem_Click(object sender, EventArgs e)

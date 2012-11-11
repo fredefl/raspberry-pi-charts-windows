@@ -58,7 +58,7 @@ namespace RaspberryPiCharts
                 Endpoint = "";
             }
             string NewEndpoint = Interaction.InputBox("Set endpoint", "Set endpoint", OldEndpoint);
-            Console.WriteLine("H:" + NewEndpoint + ":H");
+            
             if (NewEndpoint != "" && NewEndpoint != null) {
                 Endpoint = NewEndpoint;
                 File.WriteAllText(EndpointFileName, Endpoint);
@@ -93,11 +93,18 @@ namespace RaspberryPiCharts
                 string Response = (string)e.Result;
                 ResaponseObject Object = JsonConvert.DeserializeObject<ResaponseObject>(Response);
 
-                CpuMenuItem.Text = "CPU: " + Object.cpu.ToString() + "%";
-                TemperatureMenuItem.Text = "Temperature: " + Object.temp.ToString() + "C";
+                try 
+                {
+                    CpuMenuItem.Text = "CPU: " + Object.cpu.ToString() + "%";
+                    CpuChart.Series[0].Points.AddXY(IncrementalX, Math.Min(Object.cpu, (float)100));
+                } catch { }
+                
+                try 
+                {
+                    TemperatureMenuItem.Text = "Temperature: " + Object.temp.ToString() + "C";
+                    TemperatureChart.Series[0].Points.AddXY(IncrementalX, Object.temp);
+                } catch {}
 
-                CpuChart.Series[0].Points.AddXY(IncrementalX, Math.Min(Object.cpu, (float) 100));
-                TemperatureChart.Series[0].Points.AddXY(IncrementalX, Object.temp);
                 IncrementalX++;
 
                 if (CpuChart.ChartAreas[0].AxisX.Maximum > CpuChart.ChartAreas[0].AxisX.ScaleView.Size)

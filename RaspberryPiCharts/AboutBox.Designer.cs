@@ -30,6 +30,8 @@ namespace RaspberryPiCharts
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             this.BottomPanel = new System.Windows.Forms.Panel();
+            this.FoundationLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.label1 = new System.Windows.Forms.Label();
             this.SeperatorPanel = new System.Windows.Forms.Panel();
             this.DisclaimerLabel = new System.Windows.Forms.Label();
             this.WebsiteLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -40,8 +42,6 @@ namespace RaspberryPiCharts
             this.ApplicationNameLabel = new System.Windows.Forms.Label();
             this.VersionLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.FoundationLinkLabel = new System.Windows.Forms.LinkLabel();
             this.BottomPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -62,6 +62,28 @@ namespace RaspberryPiCharts
             this.BottomPanel.Name = "BottomPanel";
             this.BottomPanel.Size = new System.Drawing.Size(426, 120);
             this.BottomPanel.TabIndex = 0;
+            // 
+            // FoundationLinkLabel
+            // 
+            this.FoundationLinkLabel.AutoSize = true;
+            this.FoundationLinkLabel.LinkColor = System.Drawing.SystemColors.Highlight;
+            this.FoundationLinkLabel.Location = new System.Drawing.Point(232, 74);
+            this.FoundationLinkLabel.Name = "FoundationLinkLabel";
+            this.FoundationLinkLabel.Size = new System.Drawing.Size(85, 13);
+            this.FoundationLinkLabel.TabIndex = 11;
+            this.FoundationLinkLabel.TabStop = true;
+            this.FoundationLinkLabel.Text = "The Foundation.";
+            this.FoundationLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.FoundationLinkLabel_LinkClicked);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 8.25F);
+            this.label1.Location = new System.Drawing.Point(24, 73);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(211, 14);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "The Raspberry Pi Marks are trademarks of";
             // 
             // SeperatorPanel
             // 
@@ -170,28 +192,6 @@ namespace RaspberryPiCharts
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 8.25F);
-            this.label1.Location = new System.Drawing.Point(24, 73);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(211, 14);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "The Raspberry Pi Marks are trademarks of";
-            // 
-            // FoundationLinkLabel
-            // 
-            this.FoundationLinkLabel.AutoSize = true;
-            this.FoundationLinkLabel.LinkColor = System.Drawing.SystemColors.Highlight;
-            this.FoundationLinkLabel.Location = new System.Drawing.Point(232, 74);
-            this.FoundationLinkLabel.Name = "FoundationLinkLabel";
-            this.FoundationLinkLabel.Size = new System.Drawing.Size(82, 13);
-            this.FoundationLinkLabel.TabIndex = 11;
-            this.FoundationLinkLabel.TabStop = true;
-            this.FoundationLinkLabel.Text = "The Foundation";
-            this.FoundationLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.FoundationLinkLabel_LinkClicked);
             // 
             // AboutBox
             // 

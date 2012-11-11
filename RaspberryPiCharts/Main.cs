@@ -141,5 +141,11 @@ namespace RaspberryPiCharts
                 FancifyMenuItem.Text = "Fancify!";
             }
         }
+
+        private void AboutMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox NewAboutBox = new AboutBox();
+            NewAboutBox.Show();
+        }
     }
 }

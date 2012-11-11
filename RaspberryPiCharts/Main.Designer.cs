@@ -45,6 +45,7 @@
             this.FancifyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CpuMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TemperatureMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.CpuChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TemperatureChart)).BeginInit();
             this.MainMenu.SuspendLayout();
@@ -132,7 +133,8 @@
             this.ResetMenuItem,
             this.FancifyMenuItem,
             this.TemperatureMenuItem,
-            this.CpuMenuItem});
+            this.CpuMenuItem,
+            this.AboutMenuItem});
             this.MainMenu.Location = new System.Drawing.Point(0, 502);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Size = new System.Drawing.Size(617, 24);
@@ -175,6 +177,13 @@
             this.TemperatureMenuItem.Size = new System.Drawing.Size(115, 20);
             this.TemperatureMenuItem.Text = "Temperature: N/A";
             // 
+            // AboutMenuItem
+            // 
+            this.AboutMenuItem.Name = "AboutMenuItem";
+            this.AboutMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.AboutMenuItem.Text = "About";
+            this.AboutMenuItem.Click += new System.EventHandler(this.AboutMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,6 +222,7 @@
         private System.Windows.Forms.ToolStripMenuItem FancifyMenuItem;
         private System.Windows.Forms.ToolStripMenuItem TemperatureMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CpuMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AboutMenuItem;
     }
 }
 

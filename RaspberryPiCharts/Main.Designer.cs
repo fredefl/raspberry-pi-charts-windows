@@ -43,6 +43,8 @@
             this.SetEndpointMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ResetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FancifyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CpuMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TemperatureMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.CpuChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TemperatureChart)).BeginInit();
             this.MainMenu.SuspendLayout();
@@ -128,7 +130,9 @@
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.SetEndpointMenuItem,
             this.ResetMenuItem,
-            this.FancifyMenuItem});
+            this.FancifyMenuItem,
+            this.TemperatureMenuItem,
+            this.CpuMenuItem});
             this.MainMenu.Location = new System.Drawing.Point(0, 502);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Size = new System.Drawing.Size(617, 24);
@@ -140,7 +144,7 @@
             this.SetEndpointMenuItem.Name = "SetEndpointMenuItem";
             this.SetEndpointMenuItem.Size = new System.Drawing.Size(86, 20);
             this.SetEndpointMenuItem.Text = "Set endpoint";
-            this.SetEndpointMenuItem.Click += new System.EventHandler(this.setEndpointToolStripMenuItem_Click);
+            this.SetEndpointMenuItem.Click += new System.EventHandler(this.SetEndpointMenuItem_Click);
             // 
             // ResetMenuItem
             // 
@@ -154,7 +158,22 @@
             this.FancifyMenuItem.Name = "FancifyMenuItem";
             this.FancifyMenuItem.Size = new System.Drawing.Size(60, 20);
             this.FancifyMenuItem.Text = "Fancify!";
+            this.FancifyMenuItem.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             this.FancifyMenuItem.Click += new System.EventHandler(this.FancifyMenuItem_Click);
+            // 
+            // CpuMenuItem
+            // 
+            this.CpuMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.CpuMenuItem.Name = "CpuMenuItem";
+            this.CpuMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.CpuMenuItem.Text = "CPU: N/A";
+            // 
+            // TemperatureMenuItem
+            // 
+            this.TemperatureMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.TemperatureMenuItem.Name = "TemperatureMenuItem";
+            this.TemperatureMenuItem.Size = new System.Drawing.Size(115, 20);
+            this.TemperatureMenuItem.Text = "Temperature: N/A";
             // 
             // Main
             // 
@@ -192,6 +211,8 @@
         private System.Windows.Forms.ToolStripMenuItem SetEndpointMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ResetMenuItem;
         private System.Windows.Forms.ToolStripMenuItem FancifyMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TemperatureMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CpuMenuItem;
     }
 }
 

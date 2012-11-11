@@ -77,7 +77,7 @@ namespace RaspberryPiCharts
                 }
                 catch (Exception ex)
                 {
-                    //SetEndpointDialog(true);
+                    SetEndpointDialog(true);
                 }
             }
 
@@ -92,7 +92,10 @@ namespace RaspberryPiCharts
             {
                 string Response = (string)e.Result;
                 ResaponseObject Object = JsonConvert.DeserializeObject<ResaponseObject>(Response);
-                
+
+                CpuMenuItem.Text = "CPU: " + Object.cpu.ToString() + "%";
+                TemperatureMenuItem.Text = "Temperature: " + Object.temp.ToString() + "C";
+
                 CpuChart.Series[0].Points.AddXY(IncrementalX, Math.Min(Object.cpu, (float) 100));
                 TemperatureChart.Series[0].Points.AddXY(IncrementalX, Object.temp);
                 IncrementalX++;
@@ -110,9 +113,9 @@ namespace RaspberryPiCharts
             }
         }
 
-        private void setEndpointToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SetEndpointMenuItem_Click(object sender, EventArgs e)
         {
-            //SetEndpointDialog();
+            SetEndpointDialog();
         }
 
         private void ResetMenuItem_Click(object sender, EventArgs e)
@@ -129,7 +132,7 @@ namespace RaspberryPiCharts
                 OldPalette = CpuChart.Series[0].Palette;
                 CpuChart.Series[0].Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
                 TemperatureChart.Series[0].Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-                FancifyMenuItem.Text = "Borify!";
+                FancifyMenuItem.Text = "Borify...";
             }
             else
             {

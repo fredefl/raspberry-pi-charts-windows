@@ -256,8 +256,11 @@ namespace RaspberryPiCharts
             {
                 
                 ResponseObject Object = JsonConvert.DeserializeObject<ResponseObject>(Data);
-             
-                AddDataPoints(Object);
+
+                if (Object.temperature != null || Object.cpu != null)
+                {
+                    AddDataPoints(Object);
+                }
             }
             catch (Exception e)
             {

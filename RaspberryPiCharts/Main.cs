@@ -17,7 +17,7 @@ namespace RaspberryPiCharts
 {
     public partial class Main : Form
     {
-        public class ResaponseObject
+        public class ResponseObject
         {
             public float cpu;
             public float temperature;
@@ -103,7 +103,7 @@ namespace RaspberryPiCharts
             try
             {
                 string Response = (string)e.Result;
-                ResaponseObject Object = JsonConvert.DeserializeObject<ResaponseObject>(Response);
+                ResponseObject Object = JsonConvert.DeserializeObject<ResponseObject>(Response);
 
                 AddDataPoints(Object);
             }
@@ -113,29 +113,38 @@ namespace RaspberryPiCharts
             }
         }
 
-        private void AddDataPoints (ResaponseObject Object)
+        public void AddDataPoints (ResponseObject Object)
         {
             try
             {
                 CpuMenuItem.Text = "CPU: " + Object.cpu.ToString() + "%";
-                CpuChart.Series[0].Points.AddXY(IncrementalX, Math.Min(Object.cpu, (float)100));
+                Main.ActiveForm.Invoke(new Action(delegate()
+                {
+                    CpuChart.Series[0].Points.AddXY(IncrementalX, Math.Min(Object.cpu, (float)100));
+                }));
             }
             catch { }
 
             try
             {
                 TemperatureMenuItem.Text = "Temperature: " + Object.temperature.ToString() + "C";
-                TemperatureChart.Series[0].Points.AddXY(IncrementalX, Object.temperature);
+                Main.ActiveForm.Invoke(new Action(delegate()
+                {
+                    TemperatureChart.Series[0].Points.AddXY(IncrementalX, Object.temperature);
+                }));
             }
             catch { }
 
             IncrementalX++;
 
-            if (CpuChart.ChartAreas[0].AxisX.Maximum > CpuChart.ChartAreas[0].AxisX.ScaleView.Size)
-                CpuChart.ChartAreas[0].AxisX.ScaleView.Scroll(CpuChart.ChartAreas[0].AxisX.Maximum);
+            Main.ActiveForm.Invoke(new Action(delegate()
+            {
+                if (CpuChart.ChartAreas[0].AxisX.Maximum > CpuChart.ChartAreas[0].AxisX.ScaleView.Size)
+                    CpuChart.ChartAreas[0].AxisX.ScaleView.Scroll(CpuChart.ChartAreas[0].AxisX.Maximum);
 
-            if (TemperatureChart.ChartAreas[0].AxisX.Maximum > TemperatureChart.ChartAreas[0].AxisX.ScaleView.Size)
-                TemperatureChart.ChartAreas[0].AxisX.ScaleView.Scroll(TemperatureChart.ChartAreas[0].AxisX.Maximum);
+                if (TemperatureChart.ChartAreas[0].AxisX.Maximum > TemperatureChart.ChartAreas[0].AxisX.ScaleView.Size)
+                    TemperatureChart.ChartAreas[0].AxisX.ScaleView.Scroll(TemperatureChart.ChartAreas[0].AxisX.Maximum);
+            }));
         }
 
         private void SetEndpointMenuItem_Click(object sender, EventArgs e)
@@ -238,16 +247,17 @@ namespace RaspberryPiCharts
             }         
 
             byte[] buffer = result.AsyncState as byte[];
+            
 
-            string data = UTF8Encoding.UTF8.GetString(buffer, 0, buffer.Length);
-            string test = "";
-            test += data;
-            Debug.WriteLine("|k" + test + "|HEHHEHEHHHEEHH");
 
-            //Do something with the data object here.
+            string Data = ASCIIEncoding.ASCII.GetString(buffer, 0, networkStream.EndRead(result));
+
             try
             {
-                //AddDataPoints(JsonConvert.DeserializeObject<ResaponseObject>(data));
+                
+                ResponseObject Object = JsonConvert.DeserializeObject<ResponseObject>(Data);
+             
+                AddDataPoints(Object);
             }
             catch (Exception e)
             {

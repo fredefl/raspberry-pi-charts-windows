@@ -10,6 +10,8 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using Microsoft.VisualBasic;
+using System.Net.Sockets;
+using System.Diagnostics;
 
 namespace RaspberryPiCharts
 {
@@ -18,7 +20,7 @@ namespace RaspberryPiCharts
         public class ResaponseObject
         {
             public float cpu;
-            public float temp;
+            public float temperature;
         }
 
         public string Endpoint = "";
@@ -48,6 +50,10 @@ namespace RaspberryPiCharts
             TemperatureChart.ChartAreas[0].AxisY.Maximum = 100;
             TemperatureChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
             TemperatureChart.ChartAreas[0].AxisX.ScaleView.Size = XSize;
+
+            if (Endpoint.Contains("tcp0://") || Endpoint.Contains("tcp1://")) {
+                ConnectToServer();
+            }
         }
 
         public void SetEndpointDialog(bool Reset = false)
@@ -57,11 +63,15 @@ namespace RaspberryPiCharts
             {
                 Endpoint = "";
             }
-            string NewEndpoint = Interaction.InputBox("Set endpoint", "Set endpoint", OldEndpoint);
+            string NewEndpoint = Interaction.InputBox("Set endpoint, use http:// or https:// to indicate http/https protocol. Use tcp0:// to indicate JSON over TCP or tcp1:// to indicate comma seperated over TCP", "Set endpoint", OldEndpoint);
             
             if (NewEndpoint != "" && NewEndpoint != null) {
                 Endpoint = NewEndpoint;
                 File.WriteAllText(EndpointFileName, Endpoint);
+            }
+            if (Endpoint.Contains("tcp0://") || Endpoint.Contains("tcp1://"))
+            {
+                ConnectToServer();
             }
         }
 
@@ -71,9 +81,11 @@ namespace RaspberryPiCharts
             {
                 try
                 {
-                    WebClient Http = new WebClient();
-                    Http.DownloadStringAsync(new Uri(Endpoint));
-                    Http.DownloadStringCompleted += new DownloadStringCompletedEventHandler(ResponseListener);
+                    if (Endpoint.Contains("http://") || Endpoint.Contains("https://")) {
+                        WebClient Http = new WebClient();
+                        Http.DownloadStringAsync(new Uri(Endpoint));
+                        Http.DownloadStringCompleted += new DownloadStringCompletedEventHandler(ResponseListener);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -93,31 +105,37 @@ namespace RaspberryPiCharts
                 string Response = (string)e.Result;
                 ResaponseObject Object = JsonConvert.DeserializeObject<ResaponseObject>(Response);
 
-                try 
-                {
-                    CpuMenuItem.Text = "CPU: " + Object.cpu.ToString() + "%";
-                    CpuChart.Series[0].Points.AddXY(IncrementalX, Math.Min(Object.cpu, (float)100));
-                } catch { }
-                
-                try 
-                {
-                    TemperatureMenuItem.Text = "Temperature: " + Object.temp.ToString() + "C";
-                    TemperatureChart.Series[0].Points.AddXY(IncrementalX, Object.temp);
-                } catch {}
-
-                IncrementalX++;
-
-                if (CpuChart.ChartAreas[0].AxisX.Maximum > CpuChart.ChartAreas[0].AxisX.ScaleView.Size)
-                    CpuChart.ChartAreas[0].AxisX.ScaleView.Scroll(CpuChart.ChartAreas[0].AxisX.Maximum);
-
-                if (TemperatureChart.ChartAreas[0].AxisX.Maximum > TemperatureChart.ChartAreas[0].AxisX.ScaleView.Size)
-                    TemperatureChart.ChartAreas[0].AxisX.ScaleView.Scroll(TemperatureChart.ChartAreas[0].AxisX.Maximum);
-
+                AddDataPoints(Object);
             }
             catch (Exception)
             {
 
             }
+        }
+
+        private void AddDataPoints (ResaponseObject Object)
+        {
+            try
+            {
+                CpuMenuItem.Text = "CPU: " + Object.cpu.ToString() + "%";
+                CpuChart.Series[0].Points.AddXY(IncrementalX, Math.Min(Object.cpu, (float)100));
+            }
+            catch { }
+
+            try
+            {
+                TemperatureMenuItem.Text = "Temperature: " + Object.temperature.ToString() + "C";
+                TemperatureChart.Series[0].Points.AddXY(IncrementalX, Object.temperature);
+            }
+            catch { }
+
+            IncrementalX++;
+
+            if (CpuChart.ChartAreas[0].AxisX.Maximum > CpuChart.ChartAreas[0].AxisX.ScaleView.Size)
+                CpuChart.ChartAreas[0].AxisX.ScaleView.Scroll(CpuChart.ChartAreas[0].AxisX.Maximum);
+
+            if (TemperatureChart.ChartAreas[0].AxisX.Maximum > TemperatureChart.ChartAreas[0].AxisX.ScaleView.Size)
+                TemperatureChart.ChartAreas[0].AxisX.ScaleView.Scroll(TemperatureChart.ChartAreas[0].AxisX.Maximum);
         }
 
         private void SetEndpointMenuItem_Click(object sender, EventArgs e)
@@ -153,6 +171,93 @@ namespace RaspberryPiCharts
         {
             AboutBox NewAboutBox = new AboutBox();
             NewAboutBox.Show();
+        }
+
+          private TcpClient tcpClient = null;
+
+         public void ConnectToServer()
+         {
+                try
+               {
+                tcpClient = new TcpClient(AddressFamily.InterNetwork);
+
+                IPAddress[] remoteHost = Dns.GetHostAddresses("192.168.0.192");
+               
+                //Start the async connect operation           
+
+                tcpClient.BeginConnect(remoteHost, 5000, new
+                              AsyncCallback(ConnectCallback), tcpClient);
+
+                }
+                catch (Exception ex)
+                {
+                 
+                }
+         }
+       
+
+        private void ConnectCallback(IAsyncResult result)
+        {                       
+             try
+             {
+              //We are connected successfully.
+
+               NetworkStream networkStream = tcpClient.GetStream();
+
+               byte[] buffer = new byte[tcpClient.ReceiveBufferSize];
+
+              //Now we are connected start asyn read operation.
+
+               networkStream.BeginRead(buffer, 0, buffer.Length, ReadCallback, buffer);
+              }
+              catch(Exception ex)
+              {
+                   
+               }
+          }
+       
+
+           
+            /// Callback for Read operation
+            private void ReadCallback(IAsyncResult result)
+            {     
+   
+            NetworkStream networkStream;
+
+            try
+            {
+
+                networkStream = tcpClient.GetStream();   
+         
+            }
+
+            catch
+            {
+                return;
+
+            }         
+
+            byte[] buffer = result.AsyncState as byte[];
+
+            string data = UTF8Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+            string test = "";
+            test += data;
+            Debug.WriteLine("|k" + test + "|HEHHEHEHHHEEHH");
+
+            //Do something with the data object here.
+            try
+            {
+                //AddDataPoints(JsonConvert.DeserializeObject<ResaponseObject>(data));
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            //Then start reading from the network again.
+
+            networkStream.BeginRead(buffer, 0, buffer.Length, ReadCallback, buffer);
+
         }
     }
 }

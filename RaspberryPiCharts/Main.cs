@@ -131,12 +131,11 @@ namespace RaspberryPiCharts
                 Main.ActiveForm.Invoke(new Action(delegate()
                 {
                     TemperatureChart.Series[0].Points.AddXY(IncrementalX, Object.temperature);
+                    IncrementalX++;
                 }));
             }
             catch { }
-
-            IncrementalX++;
-
+            
             Main.ActiveForm.Invoke(new Action(delegate()
             {
                 if (CpuChart.ChartAreas[0].AxisX.Maximum > CpuChart.ChartAreas[0].AxisX.ScaleView.Size)

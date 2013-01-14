@@ -20,7 +20,7 @@ namespace RaspberryPiCharts
         public class ResponseObject
         {
             public float cpu;
-            public float temperature;
+            public float temp;
         }
 
         public string Endpoint = "";
@@ -127,10 +127,10 @@ namespace RaspberryPiCharts
 
             try
             {
-                TemperatureMenuItem.Text = "Temperature: " + Object.temperature.ToString() + "C";
+                TemperatureMenuItem.Text = "Temperature: " + Object.temp.ToString() + "C";
                 Main.ActiveForm.Invoke(new Action(delegate()
                 {
-                    TemperatureChart.Series[0].Points.AddXY(IncrementalX, Object.temperature);
+                    TemperatureChart.Series[0].Points.AddXY(IncrementalX, Object.temp);
                     IncrementalX++;
                 }));
             }
@@ -256,7 +256,7 @@ namespace RaspberryPiCharts
                 
                 ResponseObject Object = JsonConvert.DeserializeObject<ResponseObject>(Data);
 
-                if (Object.temperature != null || Object.cpu != null)
+                if (Object.temp != null || Object.cpu != null)
                 {
                     AddDataPoints(Object);
                 }

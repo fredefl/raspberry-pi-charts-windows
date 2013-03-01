@@ -100,9 +100,10 @@ namespace RaspberryPiCharts
             this.DisclaimerLabel.Font = new System.Drawing.Font("Arial", 8.25F);
             this.DisclaimerLabel.Location = new System.Drawing.Point(23, 54);
             this.DisclaimerLabel.Name = "DisclaimerLabel";
-            this.DisclaimerLabel.Size = new System.Drawing.Size(311, 14);
+            this.DisclaimerLabel.Size = new System.Drawing.Size(329, 14);
             this.DisclaimerLabel.TabIndex = 9;
-            this.DisclaimerLabel.Text = "We are responsible for any damage caused by this application.";
+            this.DisclaimerLabel.Text = "We are not responsible for any damage caused by this application.";
+            this.DisclaimerLabel.Click += new System.EventHandler(this.DisclaimerLabel_Click);
             // 
             // WebsiteLinkLabel
             // 

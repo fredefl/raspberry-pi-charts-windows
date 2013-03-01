@@ -50,5 +50,10 @@ namespace RaspberryPiCharts
         {
             System.Diagnostics.Process.Start("http://raspberrypi.org/");
         }
+
+        private void DisclaimerLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
